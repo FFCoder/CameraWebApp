@@ -1,11 +1,12 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
-
-
 class School(models.Model):
-    name = models.CharField(unique=True, blank=False)
+    name = models.CharField(
+        max_length=160,
+        unique=True, 
+        blank=False
+        )
 
     def get_absolute_url(self):
         pass
@@ -16,12 +17,8 @@ class School(models.Model):
 
 
 class CameraModel(models.Model):
-     manufacturer = models.CharField(max_length=64)
-     model = models.CharField(max_length=64)
-
-    def get_absolute_url(self):
-        pass
-
+    manufacturer = models.CharField(max_length=64)
+    model = models.CharField(max_length=64)
      
     def __str__(self):
         return f"{self.manufacturer} - {self.model}"

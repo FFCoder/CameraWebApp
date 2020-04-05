@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Auth.apps.AuthConfig',
     'Cameras.apps.CamerasConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -99,6 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+AUTH_USER_MODEL = 'Auth.User'
 
 
 # Internationalization
