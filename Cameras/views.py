@@ -1,11 +1,15 @@
 from django.shortcuts import render, HttpResponse
-from .models import  Camera
+from .models import Camera
+
 
 # Create your views here.
-def Index(request):
-    return HttpResponse('Camera View')
+def index(request):
+    return render(request, 'camera_index.html', {
+        "page_title": "Index View"
+    })
 
-def CameraDetail(request, id):
+
+def cameradetail(request, id):
     camera = Camera.objects.get(id=id)
     return render(request,
                   'camera_detail.html',
