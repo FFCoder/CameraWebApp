@@ -21,4 +21,4 @@ $manage makemigrations
 $manage migrate
 
 # Run Server
-$manage runserver
+# $manage runserver
