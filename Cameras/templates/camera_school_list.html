@@ -1,0 +1,44 @@
+{% extends 'base_layout.html' %}
+
+{% block custom_css %}
+    <style>
+        .schoolList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .card {
+            width: 16rem;
+        }
+        .card-img-top {
+            text-align: center;
+            font-size: 10rem;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+{% if Schools %}
+    <div class="schoolList">
+    {% for School in Schools %}
+        <div class="card">
+            <div class="card-img-top">
+                &#127979;
+            </div>
+            <div class="card-body">
+                <div class="card-title">{{ School }}</div>
+                <p class="card-text">
+                    Assigned Tech: {{ School.technician | title}}
+                    <a href="{% url 'cameras:school_detail' pk=School.id %}" class="btn btn-primary">See Info</a>
+
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+    {% else %}
+        <h2>Uh Oh!</h2>
+        <p>It looks like we were unable to find any schools. If you have the proper permissions, try checking out the <a
+                href="{% url 'admin:index' %}">Admin Page</a></p>
+
+
+{% endif %}
+{% endblock %}

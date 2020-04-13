@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms'
 
 ]
 
@@ -78,8 +79,12 @@ WSGI_APPLICATION = 'CameraWeb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'camera_web',
+        'USER': 'postgres',
+        'PASSWORD': 'S1994',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -102,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'Auth.User'
+LOGIN_REDIRECT_URL = 'auth:profile'
 
 
 # Internationalization

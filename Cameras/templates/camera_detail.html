@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ camera }} Detail Page</title>
-</head>
-<body>
-    {{ camera.school }}
-</body>
-</html>
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ camera.school | title }} Room: {{ camera.room }}</h1>
+        <img src="{% static 'Cameras/test_image.jpg' %}" alt="camera" class="img-fluid rounded mx-auto d-block">
+        {% if camera.model.is_controllable %}
+            <div class="row">
+                <div class="btn-group mx-auto">
+                <button class="btn btn-success">Open</button>
+                <button class="btn btn-danger">Close</button>
+            </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

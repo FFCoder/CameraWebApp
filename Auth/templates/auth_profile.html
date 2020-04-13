@@ -1,0 +1,20 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+    {% if User.is_authenticated %}
+        Hello {{ User | title }}
+        {% if Schools %}
+            <p>You are currently assigned to these schools:
+            <ul class="list-group">
+            {% for School in Schools %}
+                <li class="list-group-item">&#127979; {{ School }}</li>
+            {% endfor %}
+
+            </ul>
+        </p>
+        {% else %}
+            <p>You are not currently assigned to any schools.</p>
+        {% endif %} 
+    {% else %}
+        <p>You are not currently logged in.</p>
+    {% endif %}
+{% endblock %}

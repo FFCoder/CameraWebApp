@@ -1,0 +1,31 @@
+{% extends 'base_layout.html' %}
+{% block custom_css %}
+    <style>
+    table, tr, td  {
+        border-bottom: 1px solid black;
+    }
+    table, tr {
+        width: 50%;
+    }
+    td {
+        padding: 2rem;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <h1>{{ object }}</h1>
+    <p>
+    <table>
+    <tbody>
+    <tr>
+        <td>Assigned Tech</td>
+        <td>{{ object.technician | title}}</td>
+    </tr>
+    <tr>
+        <td>Number of Cameras</td>
+        <td>{{ object.cameras.all.count }}</td>
+    </tr>
+    </tbody>
+    </table>
+    </p>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base_layout.html' %}
+{% block custom_css %}
+    <style>
+    .schoolBlock {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid black;
+        padding: 2%;
+    }
+    .card {
+        width: 18rem;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    {% if Schools %}
+        {% for School in Schools %}
+            <div class="schoolBlock">
+                <h3>{{ School }}</h3>
+                &#X1F7E2;
+            <div class="cameraHolder">
+                {% if School.cameras.all %}
+                    {% for Camera in School.cameras.all %}
+                        <div class="card">
+                            <img src="#" alt="live image">
+                            <h5 class="card-body">
+                                <h5 class="card-title">{{ Camera }}</h5>
+                                <div class="card-text">
+                                    Online: {% if Camera.online %} &#X1F7E2; {% else %} &#X1F534;
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>No Cameras</p>
+                {% endif %}
+
+            </div>
+
+            </div>
+        {% endfor %}
+        {% else %}
+        <h2>Uh Oh!</h2>
+        <p>It looks like we were unable to find any cameras. If you have the proper permissions, try checking out the <a
+                href="{% url 'admin:index' %}">Admin Page</a></p>
+
+    {% endif %} 
+{% endblock %}
