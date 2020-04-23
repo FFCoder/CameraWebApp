@@ -1,0 +1,10 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+    <p>You have been logged out.</p>
+    <p>In 3 seconds you will be redirected. If this fails for any reason, click <a href="{% url 'cameras:index' %}">here.</a></p>
+{% endblock %}
+{% block custom_js %}
+    <script>
+    setTimeout(() => {window.location.href = "/"}, 3000)
+    </script>
+{% endblock %}

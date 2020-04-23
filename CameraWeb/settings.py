@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -122,6 +123,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get('GMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_PASS')
+EMAIL_USE_SSL = True
 
 
 # Static files (CSS, JavaScript, Images)

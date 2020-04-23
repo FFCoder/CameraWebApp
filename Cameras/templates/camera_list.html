@@ -10,39 +10,59 @@
         padding: 2%;
     }
     .card {
-        width: 18rem;
+        width: 15rem;
+    }
+    .camRow {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .camRow * {
+        margin: 2%;
     }
     </style>
 {% endblock %}
 {% block content %}
     {% if Schools %}
+        <div class="accordian" id="camAccordian">
         {% for School in Schools %}
-            <div class="schoolBlock">
-                <h3>{{ School }}</h3>
-                &#X1F7E2;
-            <div class="cameraHolder">
-                {% if School.cameras.all %}
+            <div class="card" style="width: 100%">
+            <div class="card-header" id="heading-{{ School.get_class_safe_name }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{ School.get_class_safe_name }}" aria-expanded="true" aria-controls="">
+                        {{ School | title }}
+                    </button>
+                </h2>
+            </div>
+            {% if School.cameras.all %}
+                <div class="collapse" id="collapse-{{ School.get_class_safe_name }}" aria-labelledby="heading-{{ School.get_class_safe_name }}" data-parent="#camAccordian">
+                <div class="card-body">
+                <div class="camRow">
                     {% for Camera in School.cameras.all %}
-                        <div class="card">
-                            <img src="#" alt="live image">
-                            <h5 class="card-body">
-                                <h5 class="card-title">{{ Camera }}</h5>
-                                <div class="card-text">
-                                    Online: {% if Camera.online %} &#X1F7E2; {% else %} &#X1F534;
-
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                        {% include 'camera_card.html' with camera=Camera %}
                     {% endfor %}
-                    {% else %}
-                    <p>No Cameras</p>
-                {% endif %}
 
+
+
+                </div>
+
+                </div>
+            </div>
+                {% else %}
+                <div class="collapse" id="collapse-{{ School.get_class_safe_name }}" aria-labelledby="heading-{{ School.get_class_safe_name }}" data-parent="#camAccordian">
+                <div class="card-body">
+                    No Cameras Assigned to this School.
+                </div>
             </div>
 
+            {% endif %}
             </div>
+
         {% endfor %}
+
+        </div>
         {% else %}
         <h2>Uh Oh!</h2>
         <p>It looks like we were unable to find any cameras. If you have the proper permissions, try checking out the <a

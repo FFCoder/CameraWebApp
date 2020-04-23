@@ -1,8 +1,13 @@
+from smtplib import SMTPSenderRefused
+
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 import requests
+
 from requests.auth import HTTPBasicAuth
+from django.core.mail import send_mail
+from django.conf import settings
 import logging
 
 logger = logging.getLogger('cameras_app')
@@ -33,8 +38,8 @@ class School(models.Model):
     def get_class_safe_name(self):
         return self.name.replace(" ", "-")
 
-    def get_absolute_url(self):
-        return reverse('cameras:school_detail', args=[self.id])
+    # def get_absolute_url(self):
+    #     return reverse('cameras:school_detail', args=[self.id])
 
     def __str__(self):
         return self.name
@@ -96,6 +101,11 @@ class Camera(models.Model):
         protocol='IPv4', 
         help_text="This is the IP Address of the Camera"
         )
+    port = models.IntegerField(
+        default=80,
+        help_text="Only Edit if port is different than default",
+        blank=True
+    )
 
     username = models.CharField(
         max_length=1000,
@@ -112,9 +122,11 @@ class Camera(models.Model):
 
     def get_absolute_url(self):
         pass
+
     def open(self):
-        if (self.model.controlable_device):
-            r = requests.get(f"http://{self.ip_address}{self.model.openCommand}", auth=HTTPBasicAuth(self.username, self.password))
+        if self.model.is_controllable:
+            r = requests.get(f"http://{self.ip_address}{self.model.openCommand}",
+                             auth=HTTPBasicAuth(self.username, self.password), timeout=2)
             if r.status_code == 200:
                 return True
             else:
@@ -124,8 +136,8 @@ class Camera(models.Model):
 
 
     def close(self):
-        if (self.model.controlable_device):
-            r = requests.get(f"http://{self.ip_address}{self.model.closeCommand}", auth=HTTPBasicAuth(self.username, self.password))
+        if self.model.is_controllable:
+            r = requests.get(f"http://{self.ip_address}{self.model.closeCommand}", auth=HTTPBasicAuth(self.username, self.password), timeout=2)
             if r.status_code == 200:
                 return True
             else:
@@ -157,6 +169,21 @@ class Camera(models.Model):
         if not self.password:
             self.password = self.model.password
         self.check_online()
+        try:
+            send_mail(
+                subject="Camera has been updated",
+                message=f"Camera {self.__str__()} has been updated",
+                from_email="jonathon@jonathonchambers.com",
+                recipient_list=["jonathon@jonathonchambers.com", "jonathon.chambers@gscs.org"],
+                fail_silently=False
+            )
+            logger.debug("Sent an email to ")
+        except SMTPSenderRefused as ex:
+            logger.error("Failed to send email for Camera Update Event.")
+            logger.debug(settings.EMAIL_HOST_USER)
+            logger.debug(settings.EMAIL_HOST_PASSWORD)
+            logger.debug(str(ex))
+
 
 
 

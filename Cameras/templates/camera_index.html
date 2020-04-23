@@ -1,4 +1,19 @@
 {% extends 'base_layout.html' %}
 {% block content %}
-    <h1>Hello World</h1>
+    {% if not request.user.is_authenticated %}
+        <h2>Please sign in to continue</h2>
+
+        {% else %}
+        <h2>Hello, {{ request.user | title }}</h2>
+        <p>
+        {% if request.user.is_superuser %}
+            As a <strong>Superuser</strong>, you have the rights to all schools and cameras.
+            {% else %}
+            As a <strong>technician</strong>, you have the rights only to your assigned schools.
+
+        {% endif %}
+        </p>
+        <p>You may click on your name in the top right corner to see your profile and which schools you are assigned to.</p>
+
+    {% endif %}
 {% endblock %}

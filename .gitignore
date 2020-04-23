@@ -1,5 +1,8 @@
 __pycache__
+venv
 !migrations/__init__.py
 migrations
 db.sqlite3
 .idea
+.vscode
+cameras.log

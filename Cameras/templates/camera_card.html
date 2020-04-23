@@ -1,0 +1,17 @@
+<div class="card">
+    <img src="http://via.placeholder.com/1200" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ camera | title }}</h5>
+        <p class="card-text">
+            Room: {{ camera.room }}
+            Online: {% if camera.online %} Yes {% else %} No{% endif %}
+        </p>
+        <div class="btn-group" role="group" aria-label="Camera Controls">
+            <a href="#" class="btn btn-success">Open</a>
+            <a href="#" class="btn btn-danger">Close</a>
+        </div>
+        <button class="btn btn-secondary">Refresh Image</button>
+
+
+    </div>
+</div>

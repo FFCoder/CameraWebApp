@@ -34,10 +34,14 @@
                 <li class="nav-item">
                 <a href="{% url 'admin:index' %}" class="nav-link" style="color: red">Admin</a>
             </li>
+                {% endif %}
+            <li class="nav-item">
+                <a href="{% url 'auth:profile' %}" class="nav-link"><strong>{{ request.user | title }}</strong></a>
+            </li>
                 <li class="nav-item">
                 <a href="{% url 'logout' %}" class="nav-link">Logout</a>
             </li>
-                {% endif %}
+
 
             </ul>
 
